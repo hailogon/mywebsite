@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Jon Porter - Tech Journalist and Copywriter">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <title>Jon Porter - Journalist & Copywriter</title>
+    <title>Jon Porter - Tech Journalist & Copywriter</title>
     <style>
         body {
             font-family: "Courier", monospace;
@@ -24,11 +24,13 @@
             margin: 0;
             font-size: 3em;
             letter-spacing: 1px;
+            animation: fadeIn 1s ease-in-out;
         }
         header p {
             margin: 0;
             font-size: 1.2em;
             color: #444;
+            animation: fadeIn 1.5s ease-in-out;
         }
         .banner {
             background-color: #e0e0e0;
@@ -37,9 +39,13 @@
             padding: 1em;
             font-size: 1.1em;
             font-weight: bold;
+            animation: fadeIn 2s ease-in-out;
         }
         nav {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
             margin: 2em 0;
         }
         nav a {
@@ -47,11 +53,13 @@
             color: #000;
             text-decoration: none;
             padding: 0.5em 1em;
-            margin: 0 10px;
             border-bottom: 1px solid #000;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
         nav a:hover {
             border-bottom: 1px solid #444;
+            color: #555;
+            transform: scale(1.05);
         }
         main {
             max-width: 700px;
@@ -60,6 +68,8 @@
         }
         section {
             margin-bottom: 3em;
+            opacity: 0;
+            animation: fadeIn 2.5s ease-in-out forwards;
         }
         h2 {
             font-size: 1.8em;
@@ -78,10 +88,11 @@
             text-decoration: none;
             font-size: 1.1em;
             border-bottom: 1px solid #000;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
         ul li a:hover {
             color: #555;
+            transform: scale(1.05);
         }
         iframe {
             width: 100%;
@@ -94,6 +105,33 @@
             background-color: #f8f8f8;
             border-top: 2px solid #ccc;
             color: #666;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+            nav a {
+                font-size: 1em;
+                padding: 0.3em 0.7em;
+            }
+            .banner {
+                font-size: 1em;
+            }
+            main {
+                padding: 0.5em;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
     <script>
@@ -108,7 +146,7 @@
 <body onload="displayEmail()">
 
     <div class="banner">
-        🚧 You're here early!? Everything below is a messy work in progress but at least you can get my email address 🚧
+        🚧 You're here early?! Please excuse the mess below, and feel free to get in touch via email 🚧
     </div>
 
     <header>
@@ -117,33 +155,33 @@
     </header>
 
     <nav>
-        <a href="#work">My Work</a>
+        <a href="#work">Writing</a>
+        <a href="#showreel">Presenting</a>
         <a href="#contact">Contact</a>
-        <a href="#showreel">Showreel</a>
     </nav>
 
     <main>
         <section id="work">
-            <h2>Written Work</h2>
-            <p>Check out my most recent written work below:</p>
+            <h2>Writing</h2>
+            <p>Explore my written work for The Verge below:</p>
             <ul>
                 <li><a href="https://www.theverge.com/authors/jon-porter" target="_blank">The Verge</a></li>
             </ul>
         </section>
 
         <section id="showreel">
-            <h2>Video Work</h2>
-            <p>A selection of my YouTube presenting work can be found in the playlist below:</p>
+            <h2>Showreel</h2>
+            <p>A selection of my video presenting work:</p>
             <iframe src="https://www.youtube.com/embed/0c8UdKX6GBA?list=PL9QGWDpM8Qb_vY2Xz_2sX53UJ786ji04j" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </section>
 
         <section id="contact">
             <h2>Contact Me</h2>
-            <p>Get in touch:</p>
+            <p>Get in touch for commissions and copywriting:</p>
             <ul>
-		<li id="email">Email: <a href="#">[loading...]</a></li>
                 <li><a href="https://www.linkedin.com/in/jon-porter-a1980854/?originalSubdomain=uk" target="_blank">LinkedIn</a></li>
                 <li><a href="https://www.threads.net/@jonporteruk?hl=en" target="_blank">Threads</a></li>
+                <li id="email">Email: <a href="#">[loading...]</a></li>
             </ul>
         </section>
     </main>
