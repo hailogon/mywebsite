@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jon Porter</title>
     <style>
         /* Default Light Mode Styles */
@@ -159,7 +160,7 @@
         </pre>
     </div>
 
-    <h1>Jon Porter</h1>
+    <h1>Jon Porter v2</h1>
     <h2>Journalist | Copywriter | Presenter</h2>
 
     <!-- Navbar -->
@@ -247,7 +248,7 @@
         }
 
         function adjustAsciiArt() {
-            const screenWidth = window.innerWidth;
+            const screenWidth = document.documentElement.clientWidth || window.innerWidth;  // Fallback to window.innerWidth if clientWidth is unavailable
             const wideArt = document.querySelector(".wide-screen");
             const narrowArt = document.querySelector(".narrow-screen");
 
@@ -263,6 +264,8 @@
         // Call on load and on window resize
         window.addEventListener("load", adjustAsciiArt);
         window.addEventListener("resize", adjustAsciiArt);
+        window.addEventListener("orientationchange", adjustAsciiArt);
+
     </script>
 </body>
 </html>
