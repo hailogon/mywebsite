@@ -3,192 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jon Porter - Tech Journalist and Copywriter">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <title>Jon Porter - Tech Journalist & Copywriter</title>
+    <title>Jon Porter - Journalist, Copywriter, Presenter</title>
     <style>
+        /* Default Light Mode Styles */
         body {
-            font-family: "Courier", monospace;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
+            background-color: #FFFFFF;
             color: #000000;
-        }
-        header {
-            text-align: center;
-            padding: 2em 0;
-            background-color: #f8f8f8;
-            border-bottom: 2px solid #ccc;
-        }
-        header h1 {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 16px;
             margin: 0;
-            font-size: 3em;
-            letter-spacing: 1px;
-            animation: fadeIn 1s ease-in-out;
-        }
-        header p {
-            margin: 0;
-            font-size: 1.2em;
-            color: #444;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        .banner {
-            background-color: #e0e0e0;
-            color: #444;
+            padding: 20px;
             text-align: center;
-            padding: 1em;
-            font-size: 1.1em;
-            font-weight: bold;
-            animation: fadeIn 2s ease-in-out;
+            transition: background-color 0.5s, color 0.5s;
         }
-        nav {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 2em 0;
+
+        /* Dark Mode Styles */
+        .dark-mode {
+            background-color: #000000;
+            color: #FFFFFF;
         }
-        nav a {
-            font-size: 1.2em;
-            color: #000;
-            text-decoration: none;
-            padding: 0.5em 1em;
-            border-bottom: 1px solid #000;
-            transition: color 0.3s ease, transform 0.3s ease;
+
+        .ascii-art {
+            text-align: center;
+            white-space: pre;
+            font-size: 16px;
+            line-height: 1.1;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
-        nav a:hover {
-            border-bottom: 1px solid #444;
-            color: #555;
-            transform: scale(1.05);
+
+        /* Top-right dark mode toggle button */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            background-color: #FFFFFF;
+            color: #000000;
+            border: 1px solid #000000;
+            font-family: "Courier New", Courier, monospace;
+            text-align: center;
+            border-radius: 5px;
         }
-        main {
-            max-width: 700px;
+
+        .divider {
+            margin: 20px 0;
+            font-size: 12px;
+            color: inherit;
+            text-align: center;
+        }
+        .divider:before,
+        .divider:after {
+            content: "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯";
+            display: inline-block;
+        }
+
+        .content {
+            max-width: 800px;
             margin: 0 auto;
-            padding: 1em;
+            padding: 20px;
+            border: 1px solid currentColor;
+            text-align: left;
         }
-        section {
-            margin-bottom: 3em;
-            opacity: 0;
-            animation: fadeIn 2.5s ease-in-out forwards;
-        }
-        h2 {
-            font-size: 1.8em;
-            margin-bottom: 0.5em;
-            color: #222;
+
+        h1, h2 {
+            margin-top: 0;
         }
         ul {
-            list-style-type: none;
-            padding: 0;
+            padding-left: 20px;
+            line-height: 1.5;
         }
-        ul li {
-            margin-bottom: 1em;
-        }
-        ul li a {
-            color: #000;
+        a {
+            color: inherit;
             text-decoration: none;
-            font-size: 1.1em;
-            border-bottom: 1px solid #000;
-            transition: color 0.3s ease, transform 0.3s ease;
         }
-        ul li a:hover {
-            color: #555;
-            transform: scale(1.05);
+        a:hover {
+            text-decoration: underline;
         }
-        iframe {
+
+        /* Navbar styling */
+        .navbar {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+        .navbar a {
+            margin: 0 15px;
+        }
+
+        /* Embed Styling */
+        .youtube-embed {
+            border: 2px solid currentColor;
             width: 100%;
-            height: 315px;
-            border: 2px solid #ccc;
-        }
-        footer {
-            text-align: center;
-            padding: 1em 0;
-            background-color: #f8f8f8;
-            border-top: 2px solid #ccc;
-            color: #666;
-        }
-
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 2.5em;
-            }
-            nav a {
-                font-size: 1em;
-                padding: 0.3em 0.7em;
-            }
-            .banner {
-                font-size: 1em;
-            }
-            main {
-                padding: 0.5em;
-            }
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            max-width: 640px;
+            height: 360px;
+            margin: 20px auto;
         }
     </style>
-    <script>
-        function displayEmail() {
-            var user = "mail";
-            var domain = "jonporter.uk";
-            var email = user + "@" + domain;
-            document.getElementById("email").innerHTML = '<a href="mailto:' + email + '">' + email + '</a>';
-        }
-    </script>
 </head>
-<body onload="displayEmail()">
+<body>
 
-    <div class="banner">
-        🚧 You're here early?! Please excuse the mess below, and feel free to get in touch via email 🚧
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
+
+    <!-- ASCII Art Header -->
+    <div class="ascii-art">
+        <pre>
+ _____                      ____               __                   
+/\___ \                    /\  _`\            /\ \__                
+\/__/\ \    ___     ___    \ \ \L\ \___   _ __\ \ ,_\    __   _ __  
+   _\ \ \  / __`\ /' _ `\   \ \ ,__/ __`\/\`'__\ \ \/  /'__`\/\`'__\
+  /\ \_\ \/\ \L\ \/\ \/\ \   \ \ \/\ \L\ \ \ \/ \ \ \_/\  __/\ \ \/ 
+  \ \____/\ \____/\ \_\ \_\   \ \_\ \____/\ \_\  \ \__\ \____\\ \_\ 
+   \/___/  \/___/  \/_/\/_/    \/_/\/___/  \/_/   \/__/\/____/ \/_/ 
+                                     
+        </pre>
     </div>
 
-    <header>
-        <h1>Jon Porter</h1>
-        <p>Tech Journalist | Copywriter</p>
-    </header>
+    <h1>Jon Porter</h1>
+    <h2>Journalist | Copywriter | Presenter</h2>
 
-    <nav>
-        <a href="#work">Writing</a>
-        <a href="#showreel">Presenting</a>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#about">About</a> |
+        <a href="#work">Writing</a> |
+        <a href="#showreel">Presenting</a> |
         <a href="#contact">Contact</a>
-    </nav>
+    </div>
 
-    <main>
-        <section id="work">
-            <h2>Writing</h2>
-            <p>Explore my written work for The Verge below:</p>
-            <ul>
-                <li><a href="https://www.theverge.com/authors/jon-porter" target="_blank">The Verge</a></li>
-            </ul>
-        </section>
+    <!-- Divider -->
+    <div class="divider">───</div>
 
-        <section id="showreel">
-            <h2>Showreel</h2>
-            <p>A selection of my video presenting work:</p>
-            <iframe src="https://www.youtube.com/embed/0c8UdKX6GBA?list=PL9QGWDpM8Qb_vY2Xz_2sX53UJ786ji04j" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </section>
+    <!-- Main Content Area -->
+    <div class="content">
+        <h2 id="about">Hi, I'm Jon</h2>
+        <p>You might know me from the five years I spent working at <a href="https://www.theverge.com/authors/jon-porter" target="_blank">The Verge</a> blogging about gadgets, writing about games, reporting on EU tech policy, and reviewing keyboards, but I promise I'm a lot of fun really. Before that I spent two and a half years at <a href="https://www.techradar.com/author/jon-porter" target="_blank">TechRadar</a> and <a href="https://www.trustedreviews.com/author/jonporter" target="_blank">Trusted Reviews</a>. </p>
 
-        <section id="contact">
-            <h2>Contact Me</h2>
-            <p>Get in touch for commissions and copywriting:</p>
-            <ul>
-                <li><a href="https://www.linkedin.com/in/jon-porter-a1980854/?originalSubdomain=uk" target="_blank">LinkedIn</a></li>
-                <li><a href="https://www.threads.net/@jonporteruk?hl=en" target="_blank">Threads</a></li>
-                <li id="email">Email: <a href="#">[loading...]</a></li>
-            </ul>
-        </section>
-    </main>
+        <p>Nowadays I'm a freelance technology journalist obsessed with blogging about gadgets, writing about games, reporting on EU tech policy, and — plot-twist — reviewing keyboards. I'm also available for copywriting, PR consultancy, and video presenting work.</p>
 
-    <footer>
-        <p>© 2024 Jon Porter. All rights reserved. | <a href="https://jonporter.uk">jonporter.uk</a></p>
-    </footer>
+        <p>If you like the idea of paying me to do any of these things for you then please get in touch.</p>
 
+        <!-- Divider -->
+        <div class="divider">───</div>
+
+        <!-- Writing Section -->
+        <h2 id="work">Writing</h2>
+        <p>Some of my work that I'm particularly fond of:</p>
+        <ul>
+            <li><a href="https://www.theverge.com/c/features/24191410/elgato-stream-deck-art-lebedev-optimus-maximus-keyboard-retrospective">How the Stream Deck rose from the ashes of a legendary keyboard</a></li>
+            <li><a href="https://www.theverge.com/22905351/mechanical-keyboard-keycap-clones-imitators-knockoffs-olivia-biip">Designers spend months making custom keycaps, then the counterfeits arrive</a></li>
+            <li><a href="https://www.theverge.com/24046669/4k-blu-ray-streaming-physical-media-bitrate-picture-audio-quality-collector">The case for 4K Blu-ray in a world of streaming</a></li>
+            <li><a href="https://www.theverge.com/2023/6/24/23771064/european-union-battery-regulation-ecodesign-user-replacable-batteries">Making sense of the EU’s fight for user-replaceable smartphone batteries</a></li>
+            <li><a href="https://www.theverge.com/22734645/apple-macbook-pro-2021-ports-magsafe-touch-bar-usb-c-future">Apple is ready to admit it was wrong about the future of laptops</a></li>
+        </ul>
+
+        <!-- Divider -->
+        <div class="divider">───</div>
+
+        <!-- YouTube Showreel Embed -->
+        <h2 id="showreel">Presenting</h2>
+        <div class="youtube-embed">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/0c8UdKX6GBA?list=PL9QGWDpM8Qb_vY2Xz_2sX53UJ786ji04j" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider">───</div>
+
+        <!-- Contact Information -->
+        <h2 id="contact">Contact</h2>
+        <p>Email: <a href="#" onclick="revealEmail(event)">[Click to reveal]</a></p>
+        <p>Social:
+            <a href="https://bsky.app/profile/jonporter.uk" target="_blank">BlueSky</a> |
+            <a href="https://www.linkedin.com/in/jon-porter-a1980854/?originalSubdomain=uk" target="_blank">LinkedIn</a> |
+            <a href="https://www.threads.net/@jonporteruk?hl=en" target="_blank">Threads</a>
+        </p>
+        <p>Signal: <a href="#" onclick="revealSignal(event)">[Click to reveal]</a></p>
+    </div>
+
+    <!-- Footer Divider -->
+    <div class="divider">───</div>
+
+    <!-- Footer -->
+    <p style="margin-top: 20px; color: inherit; font-size: 0.9em;">© 2024 Jon Porter</p>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        function revealEmail(event) {
+            event.preventDefault(); // Prevents page from jumping to top
+            let emailLink = document.createElement("a");
+            emailLink.href = "mailto:mail@jonporter.uk";
+            emailLink.textContent = "mail@jonporter.uk";
+            event.target.replaceWith(emailLink);
+        }
+
+        function revealSignal(event) {
+            event.preventDefault(); // Prevents page from jumping to top
+            let signalLink = document.createElement("a");
+            signalLink.href = "https://signal.me/#eu/kIqp732gyJQSBoooOE_Knu8Kxwa4UrxG94WFytT_ix2gn8IXvSJFLYPPK-EcxNnU";
+            signalLink.textContent = "jonporter.83";
+            event.target.replaceWith(signalLink);
+        }
+    </script>
 </body>
 </html>
