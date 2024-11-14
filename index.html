@@ -24,7 +24,16 @@
             color: #FFFFFF;
         }
 
-        .ascii-art {
+        .ascii-art wide-screen{
+            text-align: center;
+            white-space: pre;
+            font-size: 16px;
+            line-height: 1.1;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .ascii-art narrow-screen{
             text-align: center;
             white-space: pre;
             font-size: 16px;
@@ -110,7 +119,7 @@
     <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
 
     <!-- ASCII Art Header -->
-    <div class="ascii-art">
+    <div class="ascii-art wide-screen">
         <pre>
  _____                      ____               __                   
 /\___ \                    /\  _`\            /\ \__                
@@ -120,6 +129,28 @@
   \ \____/\ \____/\ \_\ \_\   \ \_\ \____/\ \_\  \ \__\ \____\\ \_\ 
    \/___/  \/___/  \/_/\/_/    \/_/\/___/  \/_/   \/__/\/____/ \/_/ 
                                      
+        </pre>
+    </div>
+
+    <div class="ascii-art narrow-screen" style="display: none;">
+        <pre>
+        _____                             
+        /\___ \                            
+        \/__/\ \    ___     ___            
+           _\ \ \  / __`\ /' _ `\          
+          /\ \_\ \/\ \L\ \/\ \/\ \         
+          \ \____/\ \____/\ \_\ \_\        
+           \/___/  \/___/  \/_/\/_/        
+                                               
+                                               
+   ____               __                   
+  /\  _`\            /\ \__                
+  \ \ \L\ \___   _ __\ \ ,_\    __   _ __  
+   \ \ ,__/ __`\/\`'__\ \ \/  /'__`\/\`'__\
+    \ \ \/\ \L\ \ \ \/ \ \ \_/\  __/\ \ \/ 
+     \ \_\ \____/\ \_\  \ \__\ \____\\ \_\ 
+      \/_/\/___/  \/_/   \/__/\/____/ \/_/ 
+                                               
         </pre>
     </div>
 
@@ -209,6 +240,24 @@
             signalLink.textContent = "jonporter.83";
             event.target.replaceWith(signalLink);
         }
+
+        function adjustAsciiArt() {
+            const screenWidth = window.innerWidth;
+            const wideArt = document.querySelector(".wide-screen");
+            const narrowArt = document.querySelector(".narrow-screen");
+
+            if (screenWidth < 600) {  // Adjust the threshold as needed
+                wideArt.style.display = "none";
+                narrowArt.style.display = "block";
+            } else {
+                wideArt.style.display = "block";
+                narrowArt.style.display = "none";
+            }
+        }
+
+        // Call on load and on window resize
+        window.addEventListener("load", adjustAsciiArt);
+        window.addEventListener("resize", adjustAsciiArt);
     </script>
 </body>
 </html>
