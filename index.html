@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jon Porter</title>
     <style>
-        /* Default Light Mode Styles */
+
+        /* ============================================================
+           BASE
+        ============================================================ */
+
         body {
             background-color: #FFFFFF;
             color: #000000;
@@ -19,62 +22,101 @@
             transition: background-color 0.5s, color 0.5s;
         }
 
-        /* Dark Mode Styles */
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        ul {
+            padding-left: 20px;
+            line-height: 1.5;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+
+        /* ============================================================
+           DARK MODE
+           Toggled by adding .dark-mode to <body> via JS
+        ============================================================ */
+
         .dark-mode {
             background-color: #000000;
             color: #FFFFFF;
         }
 
-        /* This will apply styles to .ascii-art elements with the .wide-screen class */
-        .ascii-art.wide-screen {
-            text-align: center;
-            white-space: pre;
-            font-size: 16px;
-            line-height: 1.1;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        /* This will apply styles to .ascii-art elements with the .narrow-screen class */
-        .ascii-art.narrow-screen {
-            text-align: center;
-            white-space: pre;
-            font-size: 14px;
-            line-height: 1.1;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        /* Top-right dark mode toggle button */
+        /* The toggle button uses currentColor so it flips automatically */
         .dark-mode-toggle {
             position: absolute;
             top: 10px;
             right: 20px;
             padding: 5px 10px;
             cursor: pointer;
-            font-size: 0.9em;
-            background-color: #FFFFFF;
-            color: #000000;
-            border: 1px solid #000000;
             font-family: "Courier New", Courier, monospace;
-            text-align: center;
+            font-size: 0.9em;
+            background-color: transparent;
+            color: currentColor;
+            border: 1px solid currentColor;
             border-radius: 5px;
         }
 
-        .divider {
-            margin: 20px 0;
-            font-size: 12px;
-            color: inherit;
-            text-align: center;
-            white-space: nowrap; /* Prevent wrapping */
-            overflow: hidden; /* Hide overflowed content */
+
+        /* ============================================================
+           ASCII ART HEADER
+           Two versions: wide (>600px) and narrow (<600px).
+           Visibility is toggled by adjustAsciiArt() in JS.
+        ============================================================ */
+
+        .ascii-art {
+            white-space: pre;
+            line-height: 1.1;
+            margin: 10px 0;
         }
 
-        .divider:before,
-        .divider:after {
-            content: "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯";
+        .ascii-art.wide-screen  { font-size: 16px; }
+        .ascii-art.narrow-screen { font-size: 14px; }
+
+
+        /* ============================================================
+           SUBTITLE & NAVBAR SEPARATORS
+           Separators ( | ) between items are hidden by JS when the
+           neighbouring items wrap onto different lines. See
+           updateSeparators() below.
+        ============================================================ */
+
+        .subtitle-item,
+        .navbar-item {
             display: inline-block;
         }
+
+        .subtitle-sep,
+        .navbar .sep {
+            display: inline-block;
+            margin: 0 8px;
+            transition: opacity 0.2s;
+        }
+
+        .subtitle-sep.hidden,
+        .navbar .sep.hidden {
+            opacity: 0;
+        }
+
+
+        /* ============================================================
+           NAVBAR
+        ============================================================ */
+
+        .navbar {
+            margin: 10px 0 20px;
+            font-size: 0.9em;
+        }
+
+
+        /* ============================================================
+           MAIN CONTENT
+        ============================================================ */
 
         .content {
             max-width: 800px;
@@ -84,32 +126,20 @@
             text-align: left;
         }
 
-        h1, h2 {
-            margin-top: 0;
-        }
-        ul {
-            padding-left: 20px;
-            line-height: 1.5;
-        }
-        a {
-            color: inherit;
-            text-decoration: underline;
-        }
-        a:hover {
-            text-decoration: underline;
+        .divider {
+            margin: 20px 0;
+            font-size: 12px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
-        /* Navbar styling */
-        .navbar {
-            margin-top: 10px;
-            margin-bottom: 20px;
-            font-size: 0.9em;
-        }
-        .navbar a {
-            margin: 0 15px;
+        .divider:before,
+        .divider:after {
+            content: "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯";
+            display: inline-block;
         }
 
-        /* Embed Styling */
         .youtube-embed {
             border: 2px solid currentColor;
             width: 100%;
@@ -117,6 +147,17 @@
             height: 360px;
             margin: 20px auto;
         }
+
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
     </style>
 </head>
 <body>
@@ -124,7 +165,7 @@
     <!-- Dark Mode Toggle -->
     <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
 
-    <!-- ASCII Art Header -->
+    <!-- ASCII Art Header: wide version shown by default, JS swaps at <600px -->
     <div class="ascii-art wide-screen">
         <pre>
  _____                      ____               __                   
@@ -134,7 +175,6 @@
   /\ \_\ \/\ \L\ \/\ \/\ \   \ \ \/\ \L\ \ \ \/ \ \ \_/\  __/\ \ \/ 
   \ \____/\ \____/\ \_\ \_\   \ \_\ \____/\ \_\  \ \__\ \____\\ \_\ 
    \/___/  \/___/  \/_/\/_/    \/_/\/___/  \/_/   \/__/\/____/ \/_/ 
-                                     
         </pre>
     </div>
 
@@ -147,8 +187,7 @@
         /\ \_\ \/\ \L\ \/\ \/\ \         
         \ \____/\ \____/\ \_\ \_\        
          \/___/  \/___/  \/_/\/_/        
-                                               
-                                               
+
  ____               __                   
 /\  _`\            /\ \__                
 \ \ \L\ \___   _ __\ \ ,_\    __   _ __  
@@ -156,107 +195,139 @@
   \ \ \/\ \L\ \ \ \/ \ \ \_/\  __/\ \ \/ 
    \ \_\ \____/\ \_\  \ \__\ \____\\ \_\ 
     \/_/\/___/  \/_/   \/__/\/____/ \/_/ 
-                                               
         </pre>
     </div>
 
     <h1>Jon Porter</h1>
-    <h2>Journalist | Copywriter | Presenter</h2>
 
-    <!-- Navbar -->
-    <div class="navbar">
-        <a href="#about">About</a> |
-        <a href="#work">Writing</a> |
-        <a href="#showreel">Presenting</a> |
-        <a href="#contact">Contact</a>
-    </div>
+    <!-- Subtitle: separators hidden by JS when items wrap onto separate lines -->
+    <h2 class="subtitle">
+        <span class="subtitle-item">Journalist</span><span class="subtitle-sep">|</span><span class="subtitle-item">Copywriter</span><span class="subtitle-sep">|</span><span class="subtitle-item">Presenter</span>
+    </h2>
 
-    <!-- Main Content Area -->
+    <!-- Navbar: same separator behaviour as subtitle -->
+    <nav class="navbar">
+        <span class="navbar-item"><a href="#about">About</a></span><span class="sep">|</span><span class="navbar-item"><a href="#work">Writing</a></span><span class="sep">|</span><span class="navbar-item"><a href="#showreel">Presenting</a></span><span class="sep">|</span><span class="navbar-item"><a href="#contact">Contact</a></span>
+    </nav>
+
+    <!-- Main Content -->
     <div class="content">
-        <h2 id="about">Hi, I'm Jon</h2>
-        <p>You might know me from the five years I spent at <a href="https://www.theverge.com/authors/jon-porter" target="_blank">The Verge</a> blogging about gadgets, writing about games, reporting on EU tech policy, and reviewing keyboards. Before that I spent two and a half years at <a href="https://www.techradar.com/author/jon-porter" target="_blank">TechRadar</a> and <a href="https://www.trustedreviews.com/author/jonporter" target="_blank">Trusted Reviews</a>. </p>
 
+        <h2 id="about">Hi, I'm Jon</h2>
+        <p>You might know me from the five years I spent at <a href="https://www.theverge.com/authors/jon-porter" target="_blank">The Verge</a> blogging about gadgets, writing about games, reporting on EU tech policy, and reviewing keyboards. Before that I spent two and a half years at <a href="https://www.techradar.com/author/jon-porter" target="_blank">TechRadar</a> and <a href="https://www.trustedreviews.com/author/jonporter" target="_blank">Trusted Reviews</a>.</p>
         <p>If you're looking to get in touch then you can do so below.</p>
 
-        <!-- Divider -->
         <div class="divider">⎯</div>
 
-        <!-- Writing Section -->
         <h2 id="work">Writing</h2>
         <p>Some highlights:</p>
         <ul>
             <li><a href="https://www.theverge.com/c/features/24191410/elgato-stream-deck-art-lebedev-optimus-maximus-keyboard-retrospective">How the Stream Deck rose from the ashes of a legendary keyboard</a></li>
             <li><a href="https://www.theverge.com/22905351/mechanical-keyboard-keycap-clones-imitators-knockoffs-olivia-biip">Designers spend months making custom keycaps, then the counterfeits arrive</a></li>
             <li><a href="https://www.theverge.com/24046669/4k-blu-ray-streaming-physical-media-bitrate-picture-audio-quality-collector">The case for 4K Blu-ray in a world of streaming</a></li>
-            <li><a href="https://www.theverge.com/2023/6/24/23771064/european-union-battery-regulation-ecodesign-user-replacable-batteries">Making sense of the EU’s fight for user-replaceable smartphone batteries</a></li>
-            <li><a href="https://www.theverge.com/22734645/apple-macbook-pro-2021-ports-magsafe-touch-bar-usb-c-future">Apple is ready to admit it was wrong about the future of laptops</a></li>
+            <li><a href="https://www.theverge.com/2023/6/24/23771064/european-union-battery-regulation-ecodesign-user-replacable-batteries">Making sense of the EU's fight for user-replaceable smartphone batteries</a></li>
+
         </ul>
 
-        <!-- Divider -->
         <div class="divider">⎯</div>
 
-        <!-- YouTube Showreel Embed -->
         <h2 id="showreel">Presenting</h2>
         <div class="youtube-embed">
             <iframe width="100%" height="100%" src="https://www.youtube.com/embed/0c8UdKX6GBA?list=PL9QGWDpM8Qb_vY2Xz_2sX53UJ786ji04j" frameborder="0" allowfullscreen></iframe>
         </div>
 
-        <!-- Divider -->
         <div class="divider">⎯</div>
 
-        <!-- Contact Information -->
         <h2 id="contact">Contact</h2>
         <p>Email: <a href="#" onclick="revealEmail(event)">[Click to reveal]</a></p>
-        <p>Social:
+        <p>
+            Social:
             <a href="https://bsky.app/profile/jonporter.uk" target="_blank">BlueSky</a> |
             <a href="https://www.linkedin.com/in/jon-porter-a1980854/?originalSubdomain=uk" target="_blank">LinkedIn</a> |
             <a href="https://www.threads.net/@jonporteruk?hl=en" target="_blank">Threads</a>
         </p>
         <p>Signal: <a href="#" onclick="revealSignal(event)">[Click to reveal]</a></p>
+
     </div>
 
-    <!-- Footer -->
-    <p style="margin-top: 20px; color: inherit; font-size: 0.9em;">© 2024 Jon Porter</p>
+    <p class="footer">© <span id="year"></span> Jon Porter</p>
 
     <script>
+
+        // ============================================================
+        // DARK MODE
+        // ============================================================
+
         function toggleDarkMode() {
             document.body.classList.toggle("dark-mode");
         }
 
+
+        // ============================================================
+        // FOOTER YEAR
+        // ============================================================
+
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+
+        // ============================================================
+        // CONTACT REVEAL
+        // Replaces placeholder links with actual contact details on click,
+        // keeping email/Signal out of plain HTML as a mild bot deterrent.
+        // ============================================================
+
         function revealEmail(event) {
-            event.preventDefault(); // Prevents page from jumping to top
-            let emailLink = document.createElement("a");
-            emailLink.href = "mailto:mail@jonporter.uk";
-            emailLink.textContent = "mail@jonporter.uk";
-            event.target.replaceWith(emailLink);
+            event.preventDefault();
+            const link = document.createElement("a");
+            link.href = "mailto:mail@jonporter.uk";
+            link.textContent = "mail@jonporter.uk";
+            event.target.replaceWith(link);
         }
 
         function revealSignal(event) {
-            event.preventDefault(); // Prevents page from jumping to top
-            let signalLink = document.createElement("a");
-            signalLink.href = "https://signal.me/#eu/kIqp732gyJQSBoooOE_Knu8Kxwa4UrxG94WFytT_ix2gn8IXvSJFLYPPK-EcxNnU";
-            signalLink.textContent = "jonporter.83";
-            event.target.replaceWith(signalLink);
+            event.preventDefault();
+            const link = document.createElement("a");
+            link.href = "https://signal.me/#eu/kIqp732gyJQSBoooOE_Knu8Kxwa4UrxG94WFytT_ix2gn8IXvSJFLYPPK-EcxNnU";
+            link.textContent = "jonporter.83";
+            event.target.replaceWith(link);
         }
+
+
+        // ============================================================
+        // LAYOUT ADJUSTMENTS ON RESIZE
+        // Handles two things:
+        //   1. Swapping wide/narrow ASCII art at the 600px breakpoint
+        //   2. Hiding separators ( | ) between items that have wrapped
+        //      onto different lines — checked independently per separator
+        // ============================================================
 
         function adjustAsciiArt() {
-            const screenWidth = document.documentElement.clientWidth || window.innerWidth;  // Fallback to window.innerWidth if clientWidth is unavailable
-            const wideArt = document.querySelector(".wide-screen");
-            const narrowArt = document.querySelector(".narrow-screen");
-
-            if (screenWidth < 600) {  // Adjust the threshold as needed
-                wideArt.style.display = "none";
-                narrowArt.style.display = "block";
-            } else {
-                wideArt.style.display = "block";
-                narrowArt.style.display = "none";
-            }
+            const isNarrow = window.innerWidth < 600;
+            document.querySelector(".wide-screen").style.display  = isNarrow ? "none"  : "block";
+            document.querySelector(".narrow-screen").style.display = isNarrow ? "block" : "none";
         }
 
-        // Call on load and on window resize
-        window.addEventListener("load", adjustAsciiArt);
-        window.addEventListener("resize", adjustAsciiArt);
-        window.addEventListener("orientationchange", adjustAsciiArt);
+        // Hides the separator between two items if they've wrapped onto different lines.
+        function updateSeparators(itemSelector, sepSelector) {
+            const items = document.querySelectorAll(itemSelector);
+            const seps  = document.querySelectorAll(sepSelector);
+            seps.forEach((sep, i) => {
+                if (!items[i] || !items[i + 1]) return;
+                const wrapped = Math.round(items[i + 1].getBoundingClientRect().top) >
+                                Math.round(items[i].getBoundingClientRect().top);
+                sep.classList.toggle("hidden", wrapped);
+            });
+        }
+
+        function onResize() {
+            adjustAsciiArt();
+            updateSeparators(".navbar-item",  ".navbar .sep");
+            updateSeparators(".subtitle-item", ".subtitle-sep");
+        }
+
+        window.addEventListener("load",            onResize);
+        window.addEventListener("resize",          onResize);
+        window.addEventListener("orientationchange", onResize);
 
     </script>
 </body>
