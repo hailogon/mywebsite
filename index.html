@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <title>Jon Porter</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Jon Porter — Editorial leader, tech and games journalist. Formerly Apple App Store Editor and staff writer at The Verge.">
+
+    <!-- Open Graph (social sharing) -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://jonporter.uk">
+    <meta property="og:title"       content="Jon Porter">
+    <meta property="og:description" content="Editorial leader, tech and games journalist. Formerly Apple App Store Editor and staff writer at The Verge.">
+    <meta property="og:image"       content="https://jonporter.uk/social-image.png">
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card"        content="summary">
+    <meta name="twitter:title"       content="Jon Porter">
+    <meta name="twitter:description" content="Editorial leader, tech and games journalist. Formerly Apple App Store Editor and staff writer at The Verge.">
     <style>
 
         /* ============================================================
@@ -184,7 +199,7 @@
     <button class="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
 
     <!-- ASCII Art Header: wide version shown by default, JS swaps at <600px -->
-    <div class="ascii-art wide-screen">
+    <div class="ascii-art wide-screen" aria-hidden="true">
         <pre>
  _____                      ____               __                   
 /\___ \                    /\  _`\            /\ \__                
@@ -196,7 +211,7 @@
         </pre>
     </div>
 
-    <div class="ascii-art narrow-screen" style="display: none;">
+    <div class="ascii-art narrow-screen" style="display: none;" aria-hidden="true">
         <pre>
        _____                             
       /\___ \                            
@@ -220,7 +235,7 @@
 
     <!-- Subtitle: separators hidden by JS when items wrap onto separate lines -->
     <h2 class="subtitle">
-        <span class="subtitle-item">Editorial Leader</span><span class="subtitle-sep">|</span><span class="subtitle-item">Games & Tech</span>
+        <span class="subtitle-item">Editorial Leader</span><span class="subtitle-sep">|</span><span class="subtitle-item">Games &amp; Tech</span>
     </h2>
 
     <!-- Navbar: same separator behaviour as subtitle -->
@@ -232,7 +247,7 @@
     <div class="content">
 
         <h2 id="about">Hi, I'm Jon</h2>
-        <p>Most recently I was an App Store Editor at <a href="https://www.apple.com/uk/app-store/" target="_blank">Apple</a>, curating games and apps across European markets. You might know me from the five years I spent at <a href="https://www.theverge.com/authors/jon-porter" target="_blank">The Verge</a> writing about games, gadgets, EU tech policy, and reviewing keyboards. Before that I spent two and a half years at <a href="https://www.techradar.com/author/jon-porter" target="_blank">TechRadar</a> and <a href="https://www.trustedreviews.com/author/jonporter" target="_blank">Trusted Reviews</a>.</p>
+        <p>Most recently I was an App Store Editor at <a href="https://www.apple.com/uk/app-store/" target="_blank" rel="noopener noreferrer">Apple</a>, curating games and apps across European markets. You might know me from the five years I spent at <a href="https://www.theverge.com/authors/jon-porter" target="_blank" rel="noopener noreferrer">The Verge</a> writing about games, gadgets, EU tech policy, and reviewing keyboards. Before that I spent two and a half years at <a href="https://www.techradar.com/author/jon-porter" target="_blank" rel="noopener noreferrer">TechRadar</a> and <a href="https://www.trustedreviews.com/author/jonporter" target="_blank" rel="noopener noreferrer">Trusted Reviews</a>.</p>
         <p>If you're looking to get in touch then you can do so below.</p>
 
         <div class="divider">⎯</div>
@@ -253,7 +268,7 @@
 
         <h2 id="showreel">Presenting</h2>
         <div class="youtube-embed">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/0c8UdKX6GBA?list=PL9QGWDpM8Qb_vY2Xz_2sX53UJ786ji04j" frameborder="0" allowfullscreen></iframe>
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/0c8UdKX6GBA?list=PL9QGWDpM8Qb_vY2Xz_2sX53UJ786ji04j" title="Jon Porter presenting showreel" frameborder="0" allowfullscreen loading="lazy"></iframe>
         </div>
 
         <div class="divider">⎯</div>
@@ -262,9 +277,9 @@
         <p>Email: <a href="#" onclick="revealEmail(event)">[Click to reveal]</a></p>
         <p>
             Social:
-            <a href="https://bsky.app/profile/jonporter.uk" target="_blank">BlueSky</a> |
-            <a href="https://www.linkedin.com/in/jon-porter-a1980854/?originalSubdomain=uk" target="_blank">LinkedIn</a> |
-            <a href="https://www.threads.net/@jonporteruk?hl=en" target="_blank">Threads</a>
+            <a href="https://bsky.app/profile/jonporter.uk" target="_blank" rel="noopener noreferrer">BlueSky</a> |
+            <a href="https://www.linkedin.com/in/jon-porter-a1980854/?originalSubdomain=uk" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+            <a href="https://www.threads.net/@jonporteruk?hl=en" target="_blank" rel="noopener noreferrer">Threads</a>
         </p>
         <p>Signal: <a href="#" onclick="revealSignal(event)">[Click to reveal]</a></p>
 
@@ -276,11 +291,30 @@
 
         // ============================================================
         // DARK MODE
+        // Respects OS preference (prefers-color-scheme) on first visit.
+        // Persists user's manual toggle choice in localStorage.
         // ============================================================
 
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
+        function applyDarkMode(isDark) {
+            document.body.classList.toggle("dark-mode", isDark);
+            document.querySelector(".dark-mode-toggle").textContent = isDark ? "Light Mode" : "Dark Mode";
         }
+
+        function toggleDarkMode() {
+            const isDark = !document.body.classList.contains("dark-mode");
+            localStorage.setItem("darkMode", isDark ? "true" : "false");
+            applyDarkMode(isDark);
+        }
+
+        // On load: honour saved preference, otherwise fall back to OS preference
+        (function () {
+            const saved = localStorage.getItem("darkMode");
+            if (saved !== null) {
+                applyDarkMode(saved === "true");
+            } else {
+                applyDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
+            }
+        })();
 
 
         // ============================================================
